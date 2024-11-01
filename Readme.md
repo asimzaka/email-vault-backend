@@ -55,3 +55,10 @@ Start all services using Docker Compose:
 docker-compose up --build
 
 ```
+
+After successfull build, You can access the backend applicaiton on following endpoint.
+
+```
+http://localhost:5000/
+
+```
