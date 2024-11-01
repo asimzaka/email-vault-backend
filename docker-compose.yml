@@ -54,12 +54,6 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
-    environment:
-      FLASK_ENV: local
-      MYSQL_HOST: mysqldb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: email_vault_db
     depends_on:
       rabbitmq:
         condition: service_healthy
