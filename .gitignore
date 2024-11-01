@@ -40,3 +40,6 @@ instance/
 
 # Docker files
 *.docker
+
+# Include example environment files
+!local.env
