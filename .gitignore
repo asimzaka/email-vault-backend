@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+*.env
+
+# Pytest cache
+.pytest_cache/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Flask-Specific Files
+instance/
+*.log
+*.sqlite
+*.db
+*.bak
+
+# Local environment secrets
+.env.local
+.env.production
+.env.test
+.env.secrets
+*.secret
+
+# Docker files
+*.docker

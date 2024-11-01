@@ -1,0 +1,70 @@
+version: '3.9'  # Latest Compose version
+
+services:
+  rabbitmq:
+      image: rabbitmq
+      container_name: rabbitmq
+      env_file:
+        - local.env
+        - .env.secrets
+      ports:
+        - "5672:5672"
+      expose:
+        - 5672
+      healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 30s
+        timeout: 30s
+        retries: 3
+
+  email-transmitter:
+      image: ecorrouge/email-transmitter
+      container_name: email_transmitter
+      env_file:
+        - local.env
+        - .env.secrets
+      volumes:
+        - ./services/email_transmitter/config.json:/app/src/services/email_transmitter/src/config.json
+      depends_on:
+        rabbitmq:
+          condition: service_healthy
+
+  mysqldb:
+    image: mysql:8.0   # Latest MySQL version
+    restart: always
+    env_file:
+      - local.env
+      - .env.secrets
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - email_vault_backend:/var/lib/mysql
+      # Optional: You can add a healthcheck to ensure the DB is ready before other services are started
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: local
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: email_vault_db
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mysqldb:
+        condition: service_healthy
+# Named volume for persistent storage
+volumes:
+  email_vault_backend:

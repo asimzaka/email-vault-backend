@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "provider": "mailjet",
+            "sourceEmail": "emailvault <emailvault@ecortest.com>",
+            "errorReportingEmail": "emailvault@ecortest.com"
+        }
+    ],
+    "events": {
+        "USER_CREATED": {
+            "subject": "Welcome {{var:recipient_name}} Verify Email",
+            "templateName": "Verify Email",
+            "id": {
+                "mailjet": 6410451
+            }
+        },
+        "RESET_PASSWORD": {
+            "subject": "Reset Password",
+            "templateName": "Reset Password",
+            "id": {
+                "mailjet": 6410454
+            }
+        }        
+    }
+}
