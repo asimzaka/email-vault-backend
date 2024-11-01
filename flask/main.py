@@ -65,7 +65,7 @@ def register():
             )
             billing_info_repo.save(billing_info)
 
-            confirmation_link = f"{Config.FRONTEND_BASE_URL}/sign-in?token={user.verification_token}"
+            confirmation_link = f"{Config.FRONTEND_BASE_URL}/sign-in?verification={user.verification_token}"
             send_email("USER_CREATED", {
                        "verify_link": confirmation_link, "recipient_name": user_first_name}, [user.email])
 
